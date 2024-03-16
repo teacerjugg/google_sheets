@@ -44,18 +44,6 @@ pub struct GoogleSheets {
 }
 
 impl GoogleSheets {
-    pub async fn new<T>(access_token: T) -> Self
-    where
-        T: Into<String>,
-    {
-        let spreadsheet_id = std::env::var("SPREADSHEET_ID").expect("SPREADSHEET_ID must be set");
-
-        Self {
-            spreadsheet_id,
-            access_token: access_token.into(),
-        }
-    }
-
     pub async fn get_values<T>(&self, client: &Client, range: T) -> Result<Value>
     where
         T: AsRef<str>,
