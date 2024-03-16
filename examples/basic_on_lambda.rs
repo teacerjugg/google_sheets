@@ -1,23 +1,26 @@
-use google_sheets::api::GoogleSheets;
-use google_sheets::auth::read_credential_from_string;
+use google_sheets::{api::GoogleSheets, auth::read_credential_from_string};
 use lambda_runtime::{run, service_fn, Error, LambdaEvent};
 use reqwest::Client;
 use serde::Deserialize;
 
 #[derive(Deserialize)]
-struct Request {}
+struct Request {
+}
 
 async fn function_handler(_event: LambdaEvent<Request>) -> Result<(), anyhow::Error> {
     // Extract some useful information from the request
     let client = Client::new();
+    let spreadsheet_id = std::env::var("SPREADSHEET_ID").expect("SPREADSHEET_ID must be set");
     let credential_json = std::env::var("GOOGLE_CREDENTIAL").expect("GOOGLE_CREDENTIAL is not set");
 
     let credential = read_credential_from_string(credential_json);
     let access_token = credential.get_access_token(&client).await?;
     tracing::info!("access_token: {}", &access_token);
 
-    let sheets = GoogleSheets::new(access_token).await;
-
+    let sheets = GoogleSheets {
+        spreadsheet_id,
+        access_token,
+    };
     let values = sheets.get_values(&client, "A1:C").await?;
     tracing::info!("values: {:?}", values);
 
