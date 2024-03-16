@@ -44,6 +44,7 @@ pub struct GoogleSheets {
 }
 
 impl GoogleSheets {
+    /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get?hl=ja
     pub async fn get_values<T>(&self, client: &Client, range: T) -> Result<Value>
     where
         T: AsRef<str>,
@@ -68,6 +69,7 @@ impl GoogleSheets {
         Ok(values)
     }
 
+    /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append?hl=ja
     pub async fn append_values<T>(&self, client: &Client, range: T, values: Value) -> Result<()>
     where
         T: AsRef<str>,
