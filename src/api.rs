@@ -91,4 +91,23 @@ impl GoogleSheets {
 
         Ok(())
     }
+
+    /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/clear?hl=ja
+    pub async fn clear<T>(&self, client: &Client, range: T) -> Result<()>
+    where
+        T: AsRef<str>,
+    {
+        let response = client
+            .post(&format!(
+                "https://sheets.googleapis.com/v4/spreadsheets/{}/values/{}:clear",
+                self.spreadsheet_id, range,
+            ))
+            .bearer_auth(&self.access_token)
+            .send()
+            .await?;
+
+        let _ = response.json::<Value>().await?;
+
+        Ok(())
+    }
 }
