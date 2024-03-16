@@ -3,6 +3,7 @@ use reqwest::Client;
 use serde_json::Value;
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/ValueInputOption?hl=ja
+#[allow(non_camel_case_types)]
 pub enum ValueInputOption {
     INPUT_VALUE_OPTION_UNSPECIFIED,
     RAW,
@@ -22,6 +23,7 @@ impl std::fmt::Display for ValueInputOption {
 }
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append?hl=ja#InsertDataOption
+#[allow(non_camel_case_types)]
 pub enum InsertDataOption {
     OVERWRITE,
     INSERT_ROWS,
