@@ -1,4 +1,8 @@
+use serde::Serialize;
+
 /// https://developers.google.com/sheets/api/reference/rest/v4/ValueInputOption?hl=ja
+#[derive(Debug, Serialize)]
+#[serde(untagged)]
 #[allow(non_camel_case_types)]
 pub enum ValueInputOption {
     INPUT_VALUE_OPTION_UNSPECIFIED,
@@ -19,6 +23,8 @@ impl std::fmt::Display for ValueInputOption {
 }
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append?hl=ja#InsertDataOption
+#[derive(Debug, Serialize)]
+#[serde(untagged)]
 #[allow(non_camel_case_types)]
 pub enum InsertDataOption {
     OVERWRITE,

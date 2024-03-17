@@ -101,13 +101,14 @@ impl GoogleSheets {
     }
 
     /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchUpdate?hl=ja
-    pub async fn batch_update() -> Result<BatchUpdateResponse> {
+    pub async fn batch_update(&self, client: &Client, batch_update_request: BatchUpdateRequest) -> Result<BatchUpdateResponse> {
         let response = client
             .post(&format!(
                 "https://sheets.googleapis.com/v4/spreadsheets/{}/values:batchUpdate",
                 self.spreadsheet_id,
             ))
             .bearer_auth(&self.access_token)
+            .json(&batch_update_request)
             .send()
             .await?;
         let status_ref = response.error_for_status_ref();
