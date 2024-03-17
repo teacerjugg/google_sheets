@@ -36,7 +36,7 @@ impl GoogleSheets {
         match status_ref {
             Ok(_) => {
                 match response.json::<ValueRange>().await {
-                    Ok(clear_response) => Ok(clear_response),
+                    Ok(response) => Ok(response),
                     Err(e) => Err(anyhow::anyhow!("failed to get values: {}", e)),
                 }
             },
@@ -66,7 +66,7 @@ impl GoogleSheets {
         match status_ref {
             Ok(_) => {
                 match response.json::<AppendValuesResponse>().await {
-                    Ok(clear_response) => Ok(clear_response),
+                    Ok(response) => Ok(response),
                     Err(e) => Err(anyhow::anyhow!("failed to append values: {}", e)),
                 }
             },
@@ -92,7 +92,7 @@ impl GoogleSheets {
         match status_ref {
             Ok(_) => {
                 match response.json::<ClearValuesResponse>().await {
-                    Ok(clear_response) => Ok(clear_response),
+                    Ok(response) => Ok(response),
                     Err(e) => Err(anyhow::anyhow!("failed to clear values: {}", e)),
                 }
             },
