@@ -14,7 +14,7 @@ pub struct GoogleSheets {
 
 impl GoogleSheets {
     /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get?hl=ja
-    pub async fn get_values<T>(&self, client: &Client, range: T) -> Result<Value>
+    pub async fn get_values<T>(&self, client: &Client, range: T) -> Result<ValueRange>
     where
         T: AsRef<str>,
     {
@@ -27,15 +27,17 @@ impl GoogleSheets {
             .bearer_auth(&self.access_token)
             .send()
             .await?;
+        let status_ref = response.error_for_status_ref();
 
-        let values = response
-            .json::<Value>()
-            .await?
-            .get("values")
-            .expect("values not found")
-            .to_owned();
-
-        Ok(values)
+        match status_ref {
+            Ok(_) => {
+                match response.json::<ValueRange>().await {
+                    Ok(clear_response) => Ok(clear_response),
+                    Err(e) => Err(anyhow::anyhow!("failed to get values: {}", e)),
+                }
+            },
+            Err(e) => Err(anyhow::anyhow!("failed to get values: {}", e)),
+        }
     }
 
     /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append?hl=ja
