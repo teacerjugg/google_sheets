@@ -19,7 +19,7 @@ pub struct UpdateValuesResponse {
     pub updated_rows: u32,
     pub updated_colums: u32,
     pub updated_cells: u64,
-    pub updated_data: ValueRange,
+    pub updated_data: Option<ValueRange>,
 }
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append?hl=ja#response-body
