@@ -60,7 +60,7 @@ impl GoogleSheets {
     }
 
     /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/clear?hl=ja
-    pub async fn clear<T>(&self, client: &Client, range: T) -> Result<()>
+    pub async fn clear_values<T>(&self, client: &Client, range: T) -> Result<()>
     where
         T: AsRef<str>,
     {
