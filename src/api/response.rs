@@ -29,3 +29,15 @@ pub struct AppendValuesResponse {
     pub table_range: String,
     pub updates: UpdateValuesResponse,
 }
+
+/// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchUpdate?hl=ja#response-body
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BatchUpdateResponse {
+    pub spreadsheet_id: String,
+    pub total_updated_rows: u32,
+    pub total_updated_columns: u32,
+    pub total_updated_cells: u64,
+    pub total_updated_sheets: u32,
+    pub responses: Vec<UpdateValuesResponse>,
+}

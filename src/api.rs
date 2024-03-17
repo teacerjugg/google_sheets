@@ -99,4 +99,27 @@ impl GoogleSheets {
             Err(e) => Err(anyhow::anyhow!("failed to clear values: {}", e)),
         }
     }
+
+    /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchUpdate?hl=ja
+    pub async fn batch_update() -> Result<BatchUpdateResponse> {
+        let response = client
+            .post(&format!(
+                "https://sheets.googleapis.com/v4/spreadsheets/{}/values:batchUpdate",
+                self.spreadsheet_id,
+            ))
+            .bearer_auth(&self.access_token)
+            .send()
+            .await?;
+        let status_ref = response.error_for_status_ref();
+
+        match status_ref {
+            Ok(_) => {
+                match response.json::<BatchUpdateResponse>().await {
+                    Ok(response) => Ok(response),
+                    Err(e) => Err(anyhow::anyhow!("failed to batch update: {}", e)),
+                }
+            },
+            Err(e) => Err(anyhow::anyhow!("failed to batch update: {}", e)),
+        }
+    }
 }
