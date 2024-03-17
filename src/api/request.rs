@@ -40,7 +40,7 @@ pub enum DateTimeRenderOption {
 /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchUpdate?hl=ja#request-body
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct BatchUpdateRequest {
+pub struct BatchUpdateValuesRequest {
     pub value_input_option: ValueInputOption,
     pub data: Vec<ValueRange>,
     pub include_values_in_response: bool,
