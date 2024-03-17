@@ -4,8 +4,12 @@ use serde_json::Value;
 
 pub mod query;
 use query::*;
+
 pub mod response;
 use response::*;
+
+pub mod request;
+use request::*;
 
 pub struct GoogleSheets {
     pub spreadsheet_id: String,
