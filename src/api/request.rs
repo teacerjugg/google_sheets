@@ -4,7 +4,6 @@ use super::query::ValueInputOption;
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/Dimension?hl=ja
 #[derive(Debug, Deserialize, Serialize)]
-#[serde(untagged)]
 #[allow(non_camel_case_types)]
 pub enum Dimension {
     DIMENSION_UNSPECIFIED,
@@ -23,7 +22,6 @@ pub struct ValueRange {
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/ValueRenderOption?hl=ja
 #[derive(Debug, Serialize)]
-#[serde(untagged)]
 #[allow(non_camel_case_types)]
 pub enum ValueRenderOption {
     FORMATTED_VALUE,
@@ -33,7 +31,6 @@ pub enum ValueRenderOption {
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/DateTimeRenderOption?hl=ja
 #[derive(Debug, Serialize)]
-#[serde(untagged)]
 #[allow(non_camel_case_types)]
 pub enum DateTimeRenderOption {
     SERIAL_NUMBER,
