@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/Dimension?hl=ja

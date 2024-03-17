@@ -65,15 +65,13 @@ impl GoogleSheets {
 
         match status_ref {
             Ok(_) => {
-                match response.json::<AppendValuesRenponse>().await {
+                match response.json::<AppendValuesResponse>().await {
                     Ok(clear_response) => Ok(clear_response),
                     Err(e) => Err(anyhow::anyhow!("failed to append values: {}", e)),
                 }
             },
             Err(e) => Err(anyhow::anyhow!("failed to append values: {}", e)),
         }
-
-        Ok(())
     }
 
     /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/clear?hl=ja
@@ -93,7 +91,7 @@ impl GoogleSheets {
 
         match status_ref {
             Ok(_) => {
-                match response.json::<ClearResponse>().await {
+                match response.json::<ClearValuesResponse>().await {
                     Ok(clear_response) => Ok(clear_response),
                     Err(e) => Err(anyhow::anyhow!("failed to clear values: {}", e)),
                 }
