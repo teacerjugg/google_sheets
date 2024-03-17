@@ -16,7 +16,7 @@ pub enum Dimension {
 #[serde(rename_all = "camelCase")]
 pub struct ValueRange {
     pub range: String,
-    pub major_dimension: Dimension,
+    pub major_dimension: Option<Dimension>,
     pub values: Vec<Vec<Value>>,
 }
 
