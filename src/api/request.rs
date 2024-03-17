@@ -17,7 +17,7 @@ pub enum Dimension {
 pub struct ValueRange {
     pub range: String,
     pub major_dimension: Option<Dimension>,
-    pub values: Vec<Vec<Value>>,
+    pub values: Vec<Value>,
 }
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/ValueRenderOption?hl=ja
