@@ -2,8 +2,10 @@ use anyhow::Result;
 use reqwest::Client;
 use serde_json::Value;
 
-mod query;
-pub use query::*;
+pub mod query;
+use query::*;
+pub mod response;
+use response::*;
 
 pub struct GoogleSheets {
     pub spreadsheet_id: String,
@@ -60,7 +62,7 @@ impl GoogleSheets {
     }
 
     /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/clear?hl=ja
-    pub async fn clear_values<T>(&self, client: &Client, range: T) -> Result<()>
+    pub async fn clear_values<T>(&self, client: &Client, range: T) -> Result<ClearResponse>
     where
         T: AsRef<str>,
     {
@@ -72,9 +74,16 @@ impl GoogleSheets {
             .bearer_auth(&self.access_token)
             .send()
             .await?;
+        let status_ref = response.error_for_status_ref();
 
-        let _ = response.json::<Value>().await?;
-
-        Ok(())
+        match status_ref {
+            Ok(_) => {
+                match response.json::<ClearResponse>().await {
+                    Ok(clear_response) => Ok(clear_response),
+                    Err(e) => Err(anyhow::anyhow!("failed to clear values: {}", e)),
+                }
+            },
+            Err(e) => Err(anyhow::anyhow!("failed to clear values: {}", e)),
+        }
     }
 }
