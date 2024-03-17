@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use serde_json::Value;
 use super::request::ValueRange;
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/clear?hl=ja#response-body
@@ -40,4 +41,13 @@ pub struct BatchUpdateValuesResponse {
     pub total_updated_cells: u64,
     pub total_updated_sheets: u32,
     pub responses: Vec<UpdateValuesResponse>,
+}
+
+/// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/batchUpdate?hl=ja#response-body
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BatchUpdateResponse {
+    pub spreadsheet_id: String,
+    pub replies: Option<Vec<Value>>,
+    pub updated_spreadsheet: Option<Value>,
 }

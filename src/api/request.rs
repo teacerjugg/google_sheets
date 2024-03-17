@@ -47,3 +47,13 @@ pub struct BatchUpdateValuesRequest {
     pub response_value_render_option: ValueRenderOption,
     pub response_date_time_render_option: DateTimeRenderOption,
 }
+
+/// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/batchUpdate?hl=ja#request-body
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BatchUpdateRequest {
+    pub requests: Vec<Value>,
+    pub include_spreadsheet_in_response: bool,
+    pub response_ranges: Option<Vec<String>>,
+    pub response_include_grid_data: Option<bool>,
+}
