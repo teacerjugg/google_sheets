@@ -41,7 +41,7 @@ impl GoogleSheets {
     }
 
     /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append?hl=ja
-    pub async fn append_values<T>(&self, client: &Client, range: T, values: Value) -> Result<()>
+    pub async fn append_values<T>(&self, client: &Client, range: T, values: Value) -> Result<AppendValuesResponse>
     where
         T: AsRef<str>,
     {
@@ -57,14 +57,23 @@ impl GoogleSheets {
             .json(&values)
             .send()
             .await?;
+        let status_ref = response.error_for_status_ref();
 
-        let _ = response.json::<Value>().await?;
+        match status_ref {
+            Ok(_) => {
+                match response.json::<AppendValuesRenponse>().await {
+                    Ok(clear_response) => Ok(clear_response),
+                    Err(e) => Err(anyhow::anyhow!("failed to append values: {}", e)),
+                }
+            },
+            Err(e) => Err(anyhow::anyhow!("failed to append values: {}", e)),
+        }
 
         Ok(())
     }
 
     /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/clear?hl=ja
-    pub async fn clear_values<T>(&self, client: &Client, range: T) -> Result<ClearResponse>
+    pub async fn clear_values<T>(&self, client: &Client, range: T) -> Result<ClearValuesResponse>
     where
         T: AsRef<str>,
     {
