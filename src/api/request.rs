@@ -1,52 +1,5 @@
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use serde_json::Value;
-use super::query::ValueInputOption;
-
-/// https://developers.google.com/sheets/api/reference/rest/v4/Dimension?hl=ja
-#[derive(Debug, Deserialize, Serialize)]
-#[allow(non_camel_case_types)]
-pub enum Dimension {
-    DIMENSION_UNSPECIFIED,
-    ROWS,
-    COLUMNS,
-}
-
-/// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values?hl=ja#ValueRange
-#[derive(Debug, Deserialize, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ValueRange {
-    pub range: String,
-    pub major_dimension: Option<Dimension>,
-    pub values: Vec<Value>,
-}
-
-/// https://developers.google.com/sheets/api/reference/rest/v4/ValueRenderOption?hl=ja
-#[derive(Debug, Serialize)]
-#[allow(non_camel_case_types)]
-pub enum ValueRenderOption {
-    FORMATTED_VALUE,
-    UNFORMATTED_VALUE,
-    FORMULA,
-}
-
-/// https://developers.google.com/sheets/api/reference/rest/v4/DateTimeRenderOption?hl=ja
-#[derive(Debug, Serialize)]
-#[allow(non_camel_case_types)]
-pub enum DateTimeRenderOption {
-    SERIAL_NUMBER,
-    FORMATTED_STRING,
-}
-
-/// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchUpdate?hl=ja#request-body
-#[derive(Debug, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct BatchUpdateValuesRequest {
-    pub value_input_option: ValueInputOption,
-    pub data: Vec<ValueRange>,
-    pub include_values_in_response: bool,
-    pub response_value_render_option: ValueRenderOption,
-    pub response_date_time_render_option: DateTimeRenderOption,
-}
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/batchUpdate?hl=ja#request-body
 #[derive(Debug, Serialize)]
@@ -56,4 +9,49 @@ pub struct BatchUpdateRequest {
     pub include_spreadsheet_in_response: bool,
     pub response_ranges: Option<Vec<String>>,
     pub response_include_grid_data: Option<bool>,
+}
+
+/// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/other?hl=ja#ExtendedValue
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum ExtendedValue {
+    NumberValue(f64),
+    StringValue(String),
+    BoolValue(bool),
+    FormulaValue(String),
+    ErrorValue(Value),
+}
+
+// /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/cells?hl=ja#CellFormat
+// #[derive(Debug, Serialize)]
+// #[serde(rename_all = "camelCase")]
+// pub struct CellFormat {
+//     number_format: Option<NumberFormat>,
+//     background_color: Option<Color>,
+//     borders: Option<Borders>,
+//     padding: Option<Padding>,
+//     horizontal_alignment: Option<String>,
+//     vertical_alignment: Option<String>,
+//     wrap_strategy: Option<String>,
+//     text_direction: Option<String>,
+//     text_format: Option<TextFormat>,
+//     hyperlink_display_type: Option<String>,
+// }
+
+/// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/cells?hl=ja#CellData
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CellData {
+    pub user_entered_value: ExtendedValue,
+    pub effective_value: Option<ExtendedValue>,
+    pub formatted_value: Option<String>,
+    pub user_entered_format: Option<Value>,
+    pub effective_format: Option<Value>,
+    pub hyperlink: Option<String>,
+    pub note: Option<String>,
+    pub text_format_runs: Option<Vec<Value>>,
+    pub data_validation: Option<Value>,
+    pub pivot_table: Option<Value>,
+    pub data_source_table: Option<Value>,
+    pub data_source_formula: Option<Value>,
 }

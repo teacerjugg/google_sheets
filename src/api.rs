@@ -2,13 +2,15 @@ use anyhow::Result;
 use reqwest::Client;
 
 pub mod query;
-use query::*;
-
 pub mod response;
-use response::*;
-
 pub mod request;
+pub mod values;
+
+use response::*;
 use request::*;
+use values::query::*;
+use values::request::*;
+use values::response::*;
 
 pub struct GoogleSheets {
     pub spreadsheet_id: String,
