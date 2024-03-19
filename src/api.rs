@@ -1,11 +1,14 @@
+pub mod error;
 pub mod query;
 pub mod request;
 pub mod response;
 pub mod values;
 
+use error::{Error, Result};
 use request::*;
-use reqwest::{Client, Result};
+use reqwest::{Client, StatusCode};
 use response::*;
+use serde_json::Value;
 
 pub struct GoogleSheets {
     pub spreadsheet_id: String,
@@ -31,8 +34,25 @@ impl GoogleSheets {
         let status_ref = response.error_for_status_ref();
 
         match status_ref {
-            Ok(_) => response.json::<BatchUpdateResponse>().await,
-            Err(e) => Err(e),
+            Ok(_) => match response.status() {
+                StatusCode::OK => Ok(response.json::<BatchUpdateResponse>().await?),
+                _ => Err(Error::Unknown),
+            },
+            Err(e) => match response.status() {
+                StatusCode::BAD_REQUEST => {
+                    let error = response
+                        .json::<Value>()
+                        .await?
+                        .get("error")
+                        .unwrap()
+                        .to_owned();
+                    Err(Error::BadRequest {
+                        code: error.get("code").unwrap().as_u64().unwrap(),
+                        message: error.get("message").unwrap().as_str().unwrap().to_owned(),
+                    })
+                },
+                _ => Err(Error::Other(e)),
+            }
         }
     }
 }
