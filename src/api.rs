@@ -1,11 +1,9 @@
-use anyhow::Result;
-use reqwest::Client;
-
 pub mod query;
 pub mod response;
 pub mod request;
 pub mod values;
 
+use reqwest::{Result, Client};
 use response::*;
 use request::*;
 use values::query::*;
@@ -35,13 +33,8 @@ impl GoogleSheets {
         let status_ref = response.error_for_status_ref();
 
         match status_ref {
-            Ok(_) => {
-                match response.json::<ValueRange>().await {
-                    Ok(response) => Ok(response),
-                    Err(e) => Err(anyhow::anyhow!("failed to get values: {}", e)),
-                }
-            },
-            Err(e) => Err(anyhow::anyhow!("failed to get values: {}", e)),
+            Ok(_) => response.json::<ValueRange>().await,
+            Err(e) => Err(e),
         }
     }
 
@@ -63,13 +56,8 @@ impl GoogleSheets {
         let status_ref = response.error_for_status_ref();
 
         match status_ref {
-            Ok(_) => {
-                match response.json::<AppendValuesResponse>().await {
-                    Ok(response) => Ok(response),
-                    Err(e) => Err(anyhow::anyhow!("failed to append values: {}", e)),
-                }
-            },
-            Err(e) => Err(anyhow::anyhow!("failed to append values: {}", e)),
+            Ok(_) => response.json::<AppendValuesResponse>().await,
+            Err(e) => Err(e),
         }
     }
 
@@ -89,13 +77,8 @@ impl GoogleSheets {
         let status_ref = response.error_for_status_ref();
 
         match status_ref {
-            Ok(_) => {
-                match response.json::<ClearValuesResponse>().await {
-                    Ok(response) => Ok(response),
-                    Err(e) => Err(anyhow::anyhow!("failed to clear values: {}", e)),
-                }
-            },
-            Err(e) => Err(anyhow::anyhow!("failed to clear values: {}", e)),
+            Ok(_) => response.json::<ClearValuesResponse>().await,
+            Err(e) => Err(e),
         }
     }
 
@@ -113,13 +96,8 @@ impl GoogleSheets {
         let status_ref = response.error_for_status_ref();
 
         match status_ref {
-            Ok(_) => {
-                match response.json::<BatchUpdateValuesResponse>().await {
-                    Ok(response) => Ok(response),
-                    Err(e) => Err(anyhow::anyhow!("failed to batch update values: {}", e)),
-                }
-            },
-            Err(e) => Err(anyhow::anyhow!("failed to batch update values: {}", e)),
+            Ok(_) => response.json::<BatchUpdateValuesResponse>().await,
+            Err(e) => Err(e),
         }
     }
 
@@ -137,13 +115,8 @@ impl GoogleSheets {
         let status_ref = response.error_for_status_ref();
 
         match status_ref {
-            Ok(_) => {
-                match response.json::<BatchUpdateResponse>().await {
-                    Ok(response) => Ok(response),
-                    Err(e) => Err(anyhow::anyhow!("failed to batch update: {}", e)),
-                }
-            },
-            Err(e) => Err(anyhow::anyhow!("failed to batch update: {}", e)),
+            Ok(_) => response.json::<BatchUpdateResponse>().await,
+            Err(e) => Err(e),
         }
     }
 }
