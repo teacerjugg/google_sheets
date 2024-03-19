@@ -1,6 +1,6 @@
+use super::query::ValueInputOption;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use super::query::ValueInputOption;
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/Dimension?hl=ja
 #[derive(Debug, Deserialize, Serialize)]

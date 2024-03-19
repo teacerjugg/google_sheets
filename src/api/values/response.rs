@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use super::request::ValueRange;
+use serde::Deserialize;
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/clear?hl=ja#response-body
 #[derive(Debug, Deserialize)]

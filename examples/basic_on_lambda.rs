@@ -4,8 +4,7 @@ use reqwest::Client;
 use serde::Deserialize;
 
 #[derive(Deserialize)]
-struct Request {
-}
+struct Request {}
 
 async fn function_handler(_event: LambdaEvent<Request>) -> Result<(), anyhow::Error> {
     // Extract some useful information from the request
