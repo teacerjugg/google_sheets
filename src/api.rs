@@ -3,6 +3,7 @@ pub mod query;
 pub mod request;
 pub mod response;
 pub mod values;
+pub mod util;
 
 use error::{Error, Result};
 use request::*;
