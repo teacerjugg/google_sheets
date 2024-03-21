@@ -1,15 +1,7 @@
+use crate::param::Dimension;
 use super::query::ValueInputOption;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-
-/// https://developers.google.com/sheets/api/reference/rest/v4/Dimension?hl=ja
-#[derive(Debug, Deserialize, Serialize)]
-#[allow(non_camel_case_types)]
-pub enum Dimension {
-    DIMENSION_UNSPECIFIED,
-    ROWS,
-    COLUMNS,
-}
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values?hl=ja#ValueRange
 #[derive(Debug, Deserialize, Serialize)]
