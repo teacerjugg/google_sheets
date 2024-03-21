@@ -81,8 +81,8 @@ impl GoogleCredential {
             iss: self.client_email.clone(),
             scope: "https://www.googleapis.com/auth/spreadsheets".to_owned(),
             aud: self.token_uri.clone(),
-            exp: exp,
-            iat: iat,
+            exp,
+            iat,
         };
 
         let jwt = encode(

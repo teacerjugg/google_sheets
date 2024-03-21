@@ -42,8 +42,8 @@ impl GoogleSheets {
                 "https://sheets.googleapis.com/v4/spreadsheets/{}/values/{}:append?valueInputOption={}&insertDataOption={}",
                 self.spreadsheet_id,
                 value_range.range,
-                ValueInputOption::USER_ENTERED.to_string(),
-                InsertDataOption::INSERT_ROWS.to_string(),
+                ValueInputOption::USER_ENTERED,
+                InsertDataOption::INSERT_ROWS,
             ))
             .bearer_auth(&self.access_token)
             .json(&value_range.values)
