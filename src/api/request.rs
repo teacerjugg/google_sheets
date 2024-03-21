@@ -1,6 +1,8 @@
 use serde::Serialize;
 use serde_json::Value;
 
+use crate::param::SortOrder;
+
 /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/batchUpdate?hl=ja#request-body
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -54,4 +56,26 @@ pub struct CellData {
     pub pivot_table: Option<Value>,
     pub data_source_table: Option<Value>,
     pub data_source_formula: Option<Value>,
+}
+
+/// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/other?hl=ja#GridRange
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GridRange {
+    pub sheet_id: u32,
+    pub start_row_index: Option<u32>,
+    pub end_row_index: Option<u32>,
+    pub start_column_index: Option<u32>,
+    pub end_column_index: Option<u32>,
+}
+
+/// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/other?hl=ja#SortSpec
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SortSpec {
+    pub sort_order: SortOrder,
+    pub foreground_color_style: Option<Value>,
+    pub background_color_style: Option<Value>,
+    pub dimension_index: u32,
+    pub data_source_column_reference: Option<Value>,
 }

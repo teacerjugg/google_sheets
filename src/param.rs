@@ -10,7 +10,7 @@ pub enum Dimension {
 }
 
 /// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/other?hl=ja#SortOrder
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Serialize)]
 #[allow(non_camel_case_types)]
 pub enum SortOrder {
     ASCENDING,
