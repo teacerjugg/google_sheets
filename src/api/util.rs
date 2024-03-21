@@ -22,7 +22,7 @@ where
     })
 }
 
-pub fn create_sort_range_request<T>(sheet_id: T, column_index: T, sort_order: SortOrder) -> Value
+pub fn create_sort_range_request<T>(sheet_id: T, start_row_index: T, column_index: T, sort_order: SortOrder) -> Value
 where
     T: Into<u32> + Copy,
 {
@@ -30,6 +30,7 @@ where
         "sortRange": {
             "range": {
                 "sheetId": sheet_id.into(),
+                "startRowIndex": start_row_index.into(),
             },
             "sortSpecs": [
                 {
