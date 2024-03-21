@@ -1,4 +1,4 @@
-use crate::param::Dimension;
+use crate::param::{Dimension, SortOrder};
 use serde_json::{json, Value};
 
 pub fn create_delete_duplicates_request<T>(sheet_id: T, start_index: T, end_index: T) -> Value
@@ -22,7 +22,7 @@ where
     })
 }
 
-pub fn create_sort_range_request<T>(sheet_id: T, column_index: T, sort_order: Dimension) -> Value
+pub fn create_sort_range_request<T>(sheet_id: T, column_index: T, sort_order: SortOrder) -> Value
 where
     T: Into<u32> + Copy,
 {
